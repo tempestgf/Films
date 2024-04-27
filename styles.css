@@ -1,0 +1,14 @@
+
+footer {
+    bottom: 0; /* A la part inferior */
+    width: 100%; /* Amplada al 100% de l'ample de la pàgina */
+    background-color: #343a40; /* Color de fons */
+    color: white; /* Color de text blanc */
+    padding: 20px; /* Espai interior */
+  }
+  .carousel-item video {
+    max-width: 640px; /* Defineix la mida màxima del vídeo */
+    max-height: 360px; /* Defineix la mida màxima del vídeo */
+    margin: auto; /* Centra el vídeo horitzontalment dins del carrusel */
+    display: block; /* Assegura que el vídeo es mostra com un bloc */
+  }
