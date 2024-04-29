@@ -12,3 +12,10 @@ footer {
     margin: auto; /* Centra el vídeo horitzontalment dins del carrusel */
     display: block; /* Assegura que el vídeo es mostra com un bloc */
   }
+
+
+  /* Estil CSS personalitzat per controlar l'alçada de les imatges dins de les targetes */
+  .card-img-top {
+    max-height: 500px; /* Alçada màxima per a les imatges */
+    object-fit: cover; /* Escalat de l'imatge per cobrir completament el recuadre */
+  }

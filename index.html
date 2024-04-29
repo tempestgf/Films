@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pàgina de sèries</title>
+  <title>guiljanielFilms</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -15,7 +15,7 @@
       <!-- Secció superior -->
       <div class="row align-items-center">
         <div class="col-md-3">
-          <a href="#" class="text-white">guiljanielFilms</a>
+          <a href="index.html" class="text-white">guiljanielFilms</a>
         </div>
         <div class="col-md-6">
           <div class="input-group">
@@ -88,28 +88,75 @@
     <div class="row">
       <div class="col-md-12 mb-4">
         <h2>Netflix</h2>
-        <div class="card-deck">
-          <!-- Serie 1 -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Serie 1</h5>
-              <p class="card-text">Descripció de la sèrie.</p>
+        <div id="seriesCarousel" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <!-- Primera fila del carrusel -->
+            <div class="carousel-item active">
+              <div class="card-deck">
+                <!-- Serie 1 -->
+                <div class="card">
+                  <img src="Netflix/t1.webp" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
+                  <div class="card-body">
+                    <h5 class="card-title">Attack on Titans</h5>
+                    <p class="card-text">Descripció de la sèrie.</p>
+                  </div>
+                </div>
+                <!-- Serie 2 -->
+                <div class="card">
+                  <img src="Netflix/steinsgate.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
+                  <div class="card-body">
+                    <h5 class="card-title">Steins;Gate</h5>
+                    <p class="card-text">Descripció de la sèrie.</p>
+                  </div>
+                </div>
+                <!-- Serie 3 -->
+                <div class="card">
+                  <img src="Netflix/baki.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
+                  <div class="card-body">
+                    <h5 class="card-title">Baki</h5>
+                    <p class="card-text">Descripció de la sèrie.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Segona fila del carrusel -->
+            <div class="carousel-item">
+              <div class="card-deck">
+                <!-- Serie 2 -->
+                <div class="card">
+                  <img src="Netflix/steinsgate.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
+                  <div class="card-body">
+                    <h5 class="card-title">Steins;Gate</h5>
+                    <p class="card-text">Descripció de la sèrie.</p>
+                  </div>
+                </div>
+                <!-- Serie 3 -->
+                <div class="card">
+                  <img src="Netflix/baki.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
+                  <div class="card-body">
+                    <h5 class="card-title">Baki</h5>
+                    <p class="card-text">Descripció de la sèrie.</p>
+                  </div>
+                </div>
+                <!-- Serie 1 -->
+                <div class="card">
+                  <img src="Netflix/t1.webp" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
+                  <div class="card-body">
+                    <h5 class="card-title">Attack on Titans</h5>
+                    <p class="card-text">Descripció de la sèrie.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <!-- Serie 2 -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Serie 2</h5>
-              <p class="card-text">Descripció de la sèrie.</p>
-            </div>
-          </div>
-          <!-- Serie 3 -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Serie 3</h5>
-              <p class="card-text">Descripció de la sèrie.</p>
-            </div>
-          </div>
+          <a class="carousel-control-prev" href="#seriesCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+          </a>
+          <a class="carousel-control-next" href="#seriesCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Següent</span>
+          </a>
         </div>
         <a href="#" class="btn btn-primary mt-3">Veure més +</a>
       </div>
