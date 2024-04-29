@@ -19,3 +19,54 @@ footer {
     max-height: 500px; /* Alçada màxima per a les imatges */
     object-fit: cover; /* Escalat de l'imatge per cobrir completament el recuadre */
   }
+
+
+/* CSS per a la classe .video-fluid */
+.video-fluid {
+  width: 100%;
+  height: auto;
+}
+
+/* CSS per a la classe .trailers-slider */
+.trailers-slider {
+  display: flex;
+  overflow-x: hidden; /* Elimina la barra de desplaçament horitzontal */
+  overflow-y: hidden; /* Afegit per assegurar-se que no apareixi una barra de desplaçament vertical no desitjada */
+  scroll-snap-type: x mandatory;
+}
+
+
+/* CSS per a la classe .trailer-item */
+.trailer-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  margin-right: 10px; /* Espai entre els vídeos */
+  width: 33.33%; /* Ajusta la mida perquè només es mostren tres trailers alhora */
+}
+
+/* CSS per a l'estrella */
+.star {
+  color: gold; /* Canvia el color de l'estrella a or */
+}
+/* CSS per a l'estrella */
+
+
+.star-rating:before {
+  content: '\2605'; /* Codi Unicode per a una estrella */
+  position: absolute;
+  color: gold; /* Color de l'estrella */
+}
+
+/* CSS per al recuadre de la categoria */
+.category-tag {
+  display: inline-block;
+  background-color: #007bff; /* Color de fons */
+  color: #fff; /* Color del text */
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 4px; /* Espai superior */
+}
+
+
+
