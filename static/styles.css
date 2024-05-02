@@ -81,5 +81,7 @@ footer {
   margin-top: 4px; /* Espai superior */
 }
 
-
+.dropdown {
+  position: relative;
+}
 
