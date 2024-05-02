@@ -1,59 +1,11 @@
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>guiljanielFilms</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+{% extends 'base.html' %}
 
-  <!-- Header -->
-  <header class="bg-dark text-white py-4">
-    <div class="container">
-      <!-- Secció superior -->
-      <div class="row align-items-center">
-        <div class="col-md-3">
-          <a href="index.html" class="text-white">guiljanielFilms</a>
-        </div>
-        <div class="col-md-6">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Cerca sèries...">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button">Cerca</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Secció inferior (subheader) -->
-      <div class="row align-items-center mt-3">
-        <div class="col-md-3">
-          <a href="register.html" class="btn btn-outline-light">Registra't</a>
-          <a href="login.html" class="btn btn-outline-light ml-2">Inici de sessió</a>
-        </div>
-        <div class="col-md-6"></div> <!-- Utilitza aquest espai per centrar elements si és necessari -->
-        <div class="col-md-3 text-right">
-          <select class="custom-select">
-            <option selected>Idioma</option>
-            <option value="1">Español</option>
-            <option value="2">Català</option>
-            <option value="3">English</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </header>
-  
+{% block title %}
+  guiljanielFilms - Inici
+{% endblock %}
 
-  <!-- Resta del contingut de la pàgina aquí -->
-
-</body>
-</html>
-
-
-
-  <!-- Navbar -->
+{% block content %}
+<!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <a class="navbar-brand" href="#">Top 10</a>
@@ -95,8 +47,8 @@
               <div class="card-deck">
                 <!-- Serie 1 -->
                 <div class="card">
-                  <a href="Netflix/daredevil.html">
-                    <img src="Netflix/daredevil.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
+                  <a href="{{ url_for('static', filename='Netflix/daredevil.html') }}">
+                    <img src="{{ url_for('static', filename='Netflix/daredevil.jpg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Daredevil</h5>
@@ -107,8 +59,8 @@
                 
                 <!-- Serie 2 -->
                 <div class="card">
-                  <a href="Netflix/StrangerThings.html">
-                    <img src="Netflix/stranger_things-875025085-large.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
+                  <a href="{{ url_for('static', filename='Netflix/StrangerThings.html') }}">
+                    <img src="{{ url_for('static', filename='Netflix/stranger_things-875025085-large.jpg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Stranger Things</h5>
@@ -118,8 +70,8 @@
                 </div>
                 <!-- Serie 3 -->
                 <div class="card">
-                  <a href="Netflix/gambitodedama.html">
-                    <img src="Netflix/gambitodedama.png" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
+                  <a href="{{ url_for('static', filename='Netflix/gambitodedama.html') }}">
+                    <img src="{{ url_for('static', filename='Netflix/gambitodedama.png') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Gambito de Dama</h5>
@@ -136,8 +88,8 @@
                 
                 <!-- Serie 2 -->
                 <div class="card">
-                  <a href="Netflix/blackmirror.html">
-                    <img src="Netflix/blackmirror.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
+                  <a href="{{ url_for('static', filename='Netflix/blackmirror.html') }}">
+                    <img src="{{ url_for('static', filename='Netflix/blackmirror.jpg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Black Mirror</h5>
@@ -147,8 +99,8 @@
                 </div>
                 <!-- Serie 3 -->
                 <div class="card">
-                  <a href="Netflix/por13razones.html">
-                    <img src="Netflix/por13razones.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
+                  <a href="{{ url_for('static', filename='Netflix/por13razones.html') }}">
+                    <img src="{{ url_for('static', filename='Netflix/por13razones.jpg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Por 13 Razones</h5>
@@ -158,8 +110,8 @@
                 </div>
                 <!-- Serie 1 -->
                 <div class="card">
-                  <a href="Netflixpeakyblinders.html">
-                    <img src="Netflix/peakyblinders.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
+                  <a href="{{ url_for('static', filename='Netflix/peakyblinders.html') }}">
+                    <img src="{{ url_for('static', filename='Netflix/peakyblinders.jpg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Peaky Blinders</h5>
@@ -193,8 +145,8 @@
               <div class="card-deck">
                 <!-- Serie 1 -->
                 <div class="card">
-                  <a href="HBO/GOT.html">
-                    <img src="HBO/GOT.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
+                  <a href="{{ url_for('static', filename='HBO/GOT.html') }}">
+                    <img src="{{ url_for('static', filename='HBO/GOT.jpg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Juego de Tronos</h5>
@@ -205,8 +157,8 @@
                 
                 <!-- Serie 2 -->
                 <div class="card">
-                  <a href="HBO/thelastofus.html">
-                    <img src="HBO/thelastofus.jpeg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
+                  <a href="{{ url_for('static', filename='HBO/thelastofus.html') }}">
+                    <img src="{{ url_for('static', filename='HBO/thelastofus.jpeg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">The Last Of US</h5>
@@ -216,8 +168,8 @@
                 </div>
                 <!-- Serie 3 -->
                 <div class="card">
-                  <a href="HBO/riverdale.html">
-                    <img src="HBO/riverdale.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
+                  <a href="{{ url_for('static', filename='HBO/riverdale.html') }}">
+                    <img src="{{ url_for('static', filename='HBO/riverdale.jpg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Riverdale</h5>
@@ -234,8 +186,8 @@
                 
                 <!-- Serie 2 -->
                 <div class="card">
-                  <a href="HBO/outsider.html">
-                    <img src="HBO/outsider.jpeg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
+                  <a href="{{ url_for('static', filename='HBO/outsider.html') }}">
+                    <img src="{{ url_for('static', filename='HBO/outsider.jpeg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">The Outsider</h5>
@@ -245,8 +197,8 @@
                 </div>
                 <!-- Serie 3 -->
                 <div class="card">
-                  <a href="HBO/from.html">
-                    <img src="HBO/from.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
+                  <a href="{{ url_for('static', filename='HBO/from.html') }}">
+                    <img src="{{ url_for('static', filename='HBO/from.jpg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">From</h5>
@@ -256,8 +208,8 @@
                 </div>
                 <!-- Serie 1 -->
                 <div class="card">
-                  <a href="HBO/thehead.html">
-                    <img src="HBO/Thehead.jpg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
+                  <a href="{{ url_for('static', filename='HBO/thehead.html') }}">
+                    <img src="{{ url_for('static', filename='HBO/Thehead.jpg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">The Head</h5>
@@ -290,8 +242,8 @@
               <div class="card-deck">
                 <!-- Serie 1 -->
                 <div class="card">
-                  <a href="Dinsey+/Punisher.html">
-                    <img src="Disney+/punisher.jpeg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
+                  <a href="{{ url_for('static', filename='Disney+/Punisher.html') }}">
+                    <img src="{{ url_for('static', filename='Disney+/punisher.jpeg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">The Punisher</h5>
@@ -302,8 +254,8 @@
                 
                 <!-- Serie 2 -->
                 <div class="card">
-                  <a href="Disney+/shogun.html">
-                    <img src="Disney+/shogun.jpeg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
+                  <a href="{{ url_for('static', filename='Disney+/shogun.html') }}">
+                    <img src="{{ url_for('static', filename='Disney+/shogun.jpeg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Shōgun</h5>
@@ -313,8 +265,8 @@
                 </div>
                 <!-- Serie 3 -->
                 <div class="card">
-                  <a href="Disney+/thedropout.html">
-                    <img src="Disney+/thedropout.jpeg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
+                  <a href="{{ url_for('static', filename='Disney+/thedropout.html') }}">
+                    <img src="{{ url_for('static', filename='Disney+/thedropout.jpeg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">The Dropout</h5>
@@ -331,8 +283,8 @@
                 
                 <!-- Serie 2 -->
                 <div class="card">
-                  <a href="Disney+/dopesick.html">
-                    <img src="Disney+/dopesick.jpeg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
+                  <a href="{{ url_for('static', filename='Disney+/dopesick.html') }}">
+                    <img src="{{ url_for('static', filename='Disney+/dopesick.jpeg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 2">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Dopesick</h5>
@@ -342,8 +294,8 @@
                 </div>
                 <!-- Serie 3 -->
                 <div class="card">
-                  <a href="Disney+/nada.html">
-                    <img src="Disney+/nada.jpeg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
+                  <a href="{{ url_for('static', filename='Disney+/nada.html') }}">
+                    <img src="{{ url_for('static', filename='Disney+/nada.jpeg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 3">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Nada</h5>
@@ -353,8 +305,8 @@
                 </div>
                 <!-- Serie 1 -->
                 <div class="card">
-                  <a href="Disney+/nosvemosenotravida.html">
-                    <img src="Disney+/nosvemosenotravida.jpeg" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
+                  <a href="{{ url_for('static', filename='Disney+/nosvemosenotravida.html') }}">
+                    <img src="{{ url_for('static', filename='Disney+/nosvemosenotravida.jpeg') }}" class="card-img-top img-fluid" alt="Imatge de la Sèrie 1">
                   </a>
                   <div class="card-body">
                     <h5 class="card-title">Nos vemos en otra vida</h5>
@@ -378,38 +330,4 @@
       </div>
     </div>
   </div>
-
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-4 mt-5">
-    <div class="scroll-top">
-        <a href="#top" class="btn btn-outline-primary btn-lg">^<i class="fas fa-chevron-up"></i></a>
-    </div> 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <p>&copy; 2024 Nom de l'empresa. Tots els drets reservats.</p>
-          <p>Breu descripció de l'empresa.</p>
-          <p>Contacte: email@empresa.com</p>
-          <p>Ubicació d'oficines: Carrer de l'Exemple, 123, Barcelona.</p>
-        </div>
-        <div class="col-md-6">
-          <ul>
-            <li><a href="#">Preguntes freqüents (FAQ)</a></li>
-            <li><a href="#">Política de privacitat</a></li>
-            <li><a href="#">Ús de cookies</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Botó de tornar amunt -->
-
-
-  <!-- Script Bootstrap i Font Awesome -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+{% endblock %}

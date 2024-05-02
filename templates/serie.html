@@ -1,52 +1,10 @@
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalls de la sèrie</title>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+{% extends 'base.html' %}
 
-  <!-- Header -->
-  <header class="bg-dark text-white py-4">
-    <div class="container">
-      <!-- Secció superior -->
-      <div class="row align-items-center">
-        <div class="col-md-3">
-          <a href="index.html" class="text-white">guiljanielFilms</a>
-        </div>
-        <div class="col-md-6">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Cerca sèries...">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button">Cerca</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Secció inferior (subheader) -->
-      <div class="row align-items-center mt-3">
-        <div class="col-md-3">
-          <a href="register.html" class="btn btn-outline-light">Registra't</a>
-          <a href="login.html" class="btn btn-outline-light ml-2">Inici de sessió</a>
-        </div>
-        <div class="col-md-6"></div> <!-- Utilitza aquest espai per centrar elements si és necessari -->
-        <div class="col-md-3 text-right">
-          <select class="custom-select">
-            <option selected>Idioma</option>
-            <option value="1">Español</option>
-            <option value="2">Català</option>
-            <option value="3">English</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </header>
+{% block title %}
+  guiljanielFilms - Serie
+{% endblock %}
+
+{% block content %}
   
 <!-- Caràtula de la sèrie -->
 <div class="container mt-5">
@@ -129,8 +87,6 @@
     </div>
   </div>
 
-  
-
   <!-- Resenyes -->
   <div class="container mt-5">
     <h2>Resenyes</h2>
@@ -160,34 +116,6 @@
     </div>
   </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <p>guiljanielFilms &copy; 2024. Tots els drets reservats.</p>
-            <p>Breu descripció de l'empresa.</p>
-            <p>Contacte: email@empresa.com</p>
-            <p>Ubicació d'oficines: Carrer Pau Claris, 123, Barcelona.</p>
-          </div>
-          <div class="col-md-6">
-            <ul>
-              <li><a href="#">Preguntes freqüents (FAQ)</a></li>
-              <li><a href="#">Política de privacitat</a></li>
-              <li><a href="#">Ús de cookies</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-  <!-- Script Bootstrap i Font Awesome -->
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
   <script>
     $(document).ready(function(){
         $('.trailers-slider').slick({
@@ -199,6 +127,4 @@
         });
     });
    </script>
-
-</body>
-</html>
+{% endblock %}

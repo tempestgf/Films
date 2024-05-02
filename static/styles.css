@@ -1,11 +1,24 @@
 
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+/* Estilos para el footer */
 footer {
-    bottom: 0; /* A la part inferior */
-    width: 100%; /* Amplada al 100% de l'ample de la pàgina */
-    background-color: #343a40; /* Color de fons */
-    color: white; /* Color de text blanc */
-    padding: 20px; /* Espai interior */
-  }
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+
+
   .carousel-item video {
     max-width: 640px; /* Defineix la mida màxima del vídeo */
     max-height: 360px; /* Defineix la mida màxima del vídeo */

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  guiljanielFilms - Login
+{% endblock %}
+
+{% block content %}
+  
+  <!-- Formulari de login -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('login') }}" method="POST">
+          <div class="form-group">
+            <label for="username">Usuari</label>
+            <input type="text" class="form-control" id="username" name="username">
+          </div>
+          <div class="form-group">
+            <label for="password">Contrasenya</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="remember">
+            <label class="form-check-label" for="remember">Recorda'm</label>
+          </div>
+          <div class="form-group">
+            <a href="#" class="text-decoration-none" onclick="showRecoveryForm()">Has oblidat la contrasenya?</a>
+          </div>
+          
+          <div id="recoveryForm" style="display: none;">
+            <div class="form-group">
+              <label for="email">Introdueix el correu existent associat al teu compte</label>
+              <input type="email" class="form-control" id="email">
+            </div>
+            <!-- Afegir més camps de recuperació aquí segons sigui necessari -->
+          </div>
+          
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Acceptar</button>
+            <button type="button" class="btn btn-primary" onclick="hideRecoveryForm()">Cancel·lar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Funció per mostrar el formulari de recuperació de contrasenya
+    function showRecoveryForm() {
+      var recoveryForm = document.getElementById("recoveryForm");
+      recoveryForm.style.display = "block";
+    }
+
+    // Funció per amagar el formulari de recuperació de contrasenya
+    function hideRecoveryForm() {
+      var recoveryForm = document.getElementById("recoveryForm");
+      recoveryForm.style.display = "none";
+    }
+  </script>
+
+{% endblock %}

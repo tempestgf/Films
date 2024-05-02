@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  guiljanielFilms - Admin
+{% endblock %}
+
+{% block content %}
+  <!-- Formulari d'administració -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form action="/admin" method="POST">
+          <!-- Camps del formulari -->
+          <div class="form-group">
+            <label for="platform">Plataforma</label>
+            <input type="text" class="form-control" id="platform" name="platform">
+          </div>
+          <div class="form-group">
+            <label for="theme">Tematica</label>
+            <input type="text" class="form-control" id="theme" name="theme">
+          </div>
+          <div class="form-group">
+            <label for="seriesName">Nom de la sèrie</label>
+            <input type="text" class="form-control" id="seriesName" name="series_name">
+          </div>
+          <div class="form-group">
+            <label for="season">Temporada</label>
+            <input type="text" class="form-control" id="season" name="season">
+          </div>
+          <div class="form-group">
+            <label for="image1">Caràtula</label>
+            <input type="file" class="form-control-file" id="image1">
+          </div>
+          <div class="form-group">
+            <label for="image2">Trailer</label>
+            <input type="file" class="form-control-file" id="image2">
+          </div>
+          <div class="form-group">
+            <label for="description">Descripció</label>
+            <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="year">Any d'emissió</label>
+            <input type="text" class="form-control" id="year" name="year">
+          </div>
+          <div class="form-group">
+            <label for="awards">Premis</label>
+            <input type="text" class="form-control" id="awards" name="awards">
+          </div>
+          <div class="form-group">
+            <label for="cast">Repartiment</label>
+            <input type="text" class="form-control" id="cast" name="cast">
+          </div>
+          <div class="form-group">
+            <label for="region">Regió</label>
+            <input type="text" class="form-control" id="region" name="region">
+          </div>
+          <!-- Boto Guardar i Boto Eliminar -->
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-danger">Eliminar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
