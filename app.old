@@ -1,0 +1,424 @@
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+import mysql.connector
+import os
+from werkzeug.utils import secure_filename
+
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+
+# Configuración de la conexión a la base de datos MySQL
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="films",
+    password="films",
+    database="resenas_series"
+)
+
+
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def save_file(file, filename, platform):
+    directory = os.path.join(app.config['UPLOAD_FOLDER'], platform)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    file_path = os.path.join(directory, filename)
+    file.save(file_path)
+    return filename
+
+@app.route('/daredevil')
+def daredevil():
+    return render_template('daredevil.html')
+@app.route('/')
+def index():
+    cursor = mydb.cursor(dictionary=True)
+    cursor.execute("SELECT s.SerieID, s.NomSerie, s.Plataforma, t.Descripcio, s.AnyInici, s.Premis, s.Repartiment, s.Regio, t.TrailerTemporada, t.ImatgeTemporada FROM series s JOIN temporades t ON s.SerieID = t.SerieID")
+    netflix_series = cursor.fetchall()
+    
+    cursor.execute("SELECT s.SerieID, s.NomSerie, s.Plataforma, t.Descripcio, s.AnyInici, s.Premis, s.Repartiment, s.Regio, t.TrailerTemporada, t.ImatgeTemporada FROM series s JOIN temporades t ON s.SerieID = t.SerieID WHERE s.Plataforma = 'HBO'")
+    hbo_series = cursor.fetchall()
+    
+    cursor.execute("SELECT s.SerieID, s.NomSerie, s.Plataforma, t.Descripcio, s.AnyInici, s.Premis, s.Repartiment, s.Regio, t.TrailerTemporada, t.ImatgeTemporada FROM series s JOIN temporades t ON s.SerieID = t.SerieID WHERE s.Plataforma = 'Disney+'")
+    disneyplus_series = cursor.fetchall()
+    
+    print("Netflix Series:", netflix_series)
+    print("HBO Series:", hbo_series)
+    print("Disney Plus Series:", disneyplus_series)
+    
+    # Asegúrate de que cada serie tenga las claves 'ImatgeTemporada' y 'Descripcio' antes de pasarlas a la plantilla
+    for serie in netflix_series:
+        if 'ImatgeTemporada' not in serie:
+            serie['ImatgeTemporada'] = ''  # O proporciona un valor predeterminado
+        if 'Tematica' not in serie:
+            serie['Tematica'] = ''  # O proporciona un valor predeterminado
+
+    for serie in hbo_series:
+        if 'ImatgeTemporada' not in serie:
+            serie['ImatgeTemporada'] = ''  # O proporciona un valor predeterminado
+
+    for serie in disneyplus_series:
+        if 'ImatgeTemporada' not in serie:
+            serie['ImatgeTemporada'] = ''  # O proporciona un valor predeterminado
+
+    return render_template('index.html', netflix_series=netflix_series, hbo_series=hbo_series, disneyplus_series=disneyplus_series)
+
+
+
+
+
+
+
+
+@app.route('/serie/<int:serie_id>')
+def serie(serie_id):
+    cursor = mydb.cursor(dictionary=True)
+    cursor.execute("SELECT s.NomSerie, s.Plataforma, t.Descripcio, s.AnyInici, s.Premis, s.Repartiment, s.Regio, t.TrailerTemporada, t.NumTemporada, t.ImatgeTemporada FROM series s JOIN temporades t ON s.SerieID = t.SerieID WHERE s.SerieID = %s", (serie_id,))
+    serie = cursor.fetchone()
+
+    # Asegúrate de que el diccionario serie tenga la clave 'ImatgeTemporada' antes de pasarla a la plantilla
+    if 'ImatgeTemporada' not in serie:
+        serie['ImatgeTemporada'] = ''  # O proporciona un valor predeterminado
+
+    # Recuperar las reseñas para esta temporada de la base de datos
+    cursor.execute("SELECT * FROM resenyes WHERE TemporadaID = %s", (serie_id,))
+    reviews = cursor.fetchall()
+
+    cursor.close()
+
+    # Aquí asegúrate de que cada reseña tenga las propiedades adecuadas
+    # Si el diccionario de reseña en la base de datos tiene claves diferentes, deberás ajustar estas claves
+    reviews_with_properties = []
+    for review in reviews:
+        review_with_properties = {
+            'NomUsuari': review['NomUsuari'],
+            'Critica': review['Critica'],
+            'DataResenya': review['DataResenya'],
+            'Puntuacio': review['Puntuacio']
+        }
+        reviews_with_properties.append(review_with_properties)
+
+    return render_template('serie.html', serie=serie, reviews=reviews_with_properties)
+
+
+
+
+@app.route('/resenas')
+def resenas():
+    series = [
+        {
+            'nombre': 'Narcos',
+            'temporadas': ['Temporada 1', 'Temporada 2', 'Temporada 3'],
+            'reseñas': {
+                'Temporada 1': 'Narcos nos introduce en el mundo del narcotráfico colombiano de manera magistral. Las actuaciones son excelentes y la trama es emocionante.',
+                'Temporada 2': 'La segunda temporada de Narcos mantiene la calidad de la primera. La historia se vuelve aún más intensa y llena de giros inesperados.',
+                'Temporada 3': 'Aunque la tercera temporada de Narcos sigue siendo interesante, algunos fans consideran que no alcanza el nivel de las anteriores. Aún así, es una serie que merece la pena ver.'
+            }
+        },
+        {
+            'nombre': 'Stranger Things',
+            'temporadas': ['Temporada 1', 'Temporada 2', 'Temporada 3'],
+            'reseñas': {
+                'Temporada 1': 'Stranger Things nos transporta a la década de los 80 con su atmósfera nostálgica y su emocionante historia. Los personajes son carismáticos y la trama es intrigante desde el primer episodio.',
+                'Temporada 2': 'La segunda temporada de Stranger Things expande el universo de la serie y profundiza en la mitología establecida en la primera temporada. Los nuevos personajes y los giros argumentales mantienen el interés del espectador.',
+                'Temporada 3': 'Aunque la tercera temporada de Stranger Things es visualmente impresionante y llena de momentos emocionantes, algunos críticos consideran que la trama se vuelve un poco predecible en comparación con las temporadas anteriores.'
+            }
+        }
+    ]
+    return render_template('resenas.html', series=series)
+
+@app.route('/ver_resena', methods=['POST'])
+def ver_resena():
+    serie = request.form['serie']
+    temporada = request.form['temporada']
+    series = [
+        {
+            'nombre': 'Narcos',
+            'temporadas': ['Temporada 1', 'Temporada 2', 'Temporada 3'],
+            'reseñas': {
+                'Temporada 1': 'Excelente serie',
+                'Temporada 2': 'Muy recomendada',
+                'Temporada 3': 'Aún no hay reseña'
+            }
+        },
+        {
+            'nombre': 'Stranger Things',
+            'temporadas': ['Temporada 1', 'Temporada 2', 'Temporada 3'],
+            'reseñas': {
+                'Temporada 1': 'Muy entretenida',
+                'Temporada 2': 'Gran elenco de actores',
+                'Temporada 3': 'Esperando reseñas'
+            }
+        }
+    ]
+    reseña = series[0]['reseñas'][temporada] if serie == 'Narcos' else series[1]['reseñas'][temporada]
+    return render_template('resenas.html', serie=serie, temporada=temporada, reseña=reseña)
+
+
+@app.context_processor
+def inject_es_administrador():
+    return dict(es_administrador=es_administrador)
+
+ADMIN_USERS = ['admin', 'superadmin']
+
+def es_administrador(username):
+    return username in ADMIN_USERS
+
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    print("Debug: Se alcanzó la ruta '/admin'")
+    if 'username' in session:
+        username = session['username']
+        if es_administrador(username):
+            serie_id = 1  # Definir serie_id con un valor por defecto
+            if request.method == 'POST':
+                platform = request.form['platform']
+                theme = request.form['theme']
+                series_name = request.form['series_name']
+                season = request.form['season']
+                description = request.form['description']
+                year = request.form['year']
+                awards = request.form['awards']
+                cast = request.form['cast']
+                region = request.form['region']
+
+                image = request.files['image']
+                trailer = request.files['trailer']
+                image_filename = None
+                trailer_filename = None
+
+                if image and allowed_file(image.filename):
+                    image_filename = save_file(image, secure_filename(image.filename), platform)
+
+                if trailer and allowed_file(trailer.filename) and trailer.filename.endswith('.mp4'):
+                    trailer_filename = save_file(trailer, secure_filename(trailer.filename), platform)
+
+                # Validar campos obligatorios
+                if not platform or not theme or not series_name or not season or not description or not year:
+                    flash('Todos los campos son obligatorios.', 'error')
+                    return redirect(url_for('admin'))
+
+                # Validar archivos subidos
+                if not image_filename:
+                    flash('Formato de archivo de imagen no permitido o no proporcionado.', 'error')
+                    return redirect(url_for('admin'))
+
+                if not trailer_filename:
+                    flash('Formato de archivo de vídeo no permitido o no proporcionado.', 'error')
+                    return redirect(url_for('admin'))
+
+                cursor = mydb.cursor()
+                sql = "INSERT INTO series (Plataforma, Tematica, NomSerie, AnyInici, Premis, Repartiment, Regio) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                val = (platform, theme, series_name, year, awards, cast, region)
+                cursor.execute(sql, val)
+                mydb.commit()
+
+                serie_id = cursor.lastrowid
+
+                sql = "INSERT INTO temporades (SerieID, NumTemporada, Descripcio, ImatgeTemporada, TrailerTemporada) VALUES (%s, %s, %s, %s, %s)"
+                val = (serie_id, season, description, image_filename, trailer_filename)
+                cursor.execute(sql, val)
+                mydb.commit()
+
+                cursor.close()
+
+                flash('La serie se ha agregado correctamente.', 'success')
+                return redirect(url_for('admin'))
+
+            elif request.method == 'GET' and 'delete' in request.args:
+                serie_id = request.args['delete']
+                cursor = mydb.cursor()
+                cursor.execute("SELECT ImatgeTemporada, TrailerTemporada FROM temporades WHERE SerieID = %s", (serie_id,))
+                files = cursor.fetchone()
+                if files:
+                    for file_path in files:
+                        if file_path:
+                            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], file_path))
+                cursor.execute("DELETE FROM temporades WHERE SerieID = %s", (serie_id,))
+                mydb.commit()
+                cursor.execute("DELETE FROM series WHERE SerieID = %s", (serie_id,))
+                mydb.commit()
+                cursor.close()
+                flash('La serie se ha eliminado correctamente.', 'success')
+                return redirect(url_for('admin'))
+
+            return render_template('admin.html', serie_id=serie_id)  # Pasar serie_id al renderizar la plantilla
+        else:
+            flash('Acceso no autorizado. Debes ser un administrador.', 'error')
+            return redirect(url_for('index'))
+    else:
+        flash('Debes iniciar sesión como administrador.', 'error')
+        return redirect(url_for('login'))
+
+
+@app.route('/eliminar_serie', methods=['POST'])
+def eliminar_serie():
+    if request.method == 'POST':
+        serie_id = request.form.get('serie_id')
+        if serie_id:
+            cursor = mydb.cursor()
+            try:
+                # Eliminar la serie de la tabla temporadas primero
+                sql = "DELETE FROM temporades WHERE SerieID = %s"
+                cursor.execute(sql, (serie_id,))
+                
+                # Luego, eliminar la serie de la tabla series
+                sql = "DELETE FROM series WHERE SerieID = %s"
+                cursor.execute(sql, (serie_id,))
+                
+                mydb.commit()
+                
+                cursor.close()
+                
+                flash('La serie se ha eliminado correctamente.', 'success')
+            except Exception as e:
+                print("Error al eliminar la serie:", e)
+                mydb.rollback()
+                flash('Error al eliminar la serie.', 'error')
+                
+    return redirect(url_for('admin'))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        username = request.form['username']
+        name = request.form['name']
+        surname = request.form['surname']
+        email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirmPassword']
+
+        # Verificar si hay campos vacíos
+        if not all([username, name, surname, email, password, confirm_password]):
+            flash('Por favor, completa todos los campos.', 'error')
+            return render_template('register.html')
+
+        # Verificar si el usuario ya existe en la base de datos
+        cursor = mydb.cursor()
+        sql = "SELECT * FROM Usuarios WHERE username = %s OR email = %s"
+        val = (username, email)
+        cursor.execute(sql, val)
+        user = cursor.fetchone()
+
+        if user:
+            flash('Ya existe un usuario con este nombre de usuario o correo electrónico.', 'error')
+            return render_template('register.html')
+
+        # Verificar si las contraseñas coinciden
+        if password != confirm_password:
+            flash('Las contraseñas no coinciden.', 'error')
+            return render_template('register.html')
+
+        # Insertar el nuevo usuario en la base de datos
+        sql = "INSERT INTO Usuarios (username, name, surname, email, password) VALUES (%s, %s, %s, %s, %s)"
+        val = (username, name, surname, email, password)
+        cursor.execute(sql, val)
+        mydb.commit()
+
+        return redirect(url_for('login'))
+
+    return render_template('register.html')
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        cursor = mydb.cursor()
+        sql = "SELECT * FROM Usuarios WHERE username = %s AND password = %s"
+        val = (username, password)
+        cursor.execute(sql, val)
+        user = cursor.fetchone()
+
+        if user:
+            session['username'] = user[1]
+            return redirect(url_for('index'))  # Redirige al usuario a la página principal después del inicio de sesión
+
+        # Verifica si es el inicio de sesión del administrador
+        if username == 'admin' and password == 'admin':
+            session['admin'] = True
+            return redirect(url_for('admin'))  # Redirige al administrador a su panel de control
+
+        flash('Credenciales incorrectas. Inténtalo de nuevo.', 'error')
+    
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)  
+    #flash('You have been logged out.', 'success')  
+    return redirect(url_for('index'))  
+
+
+@app.route('/leave_review', methods=['POST'])
+def leave_review():
+    if 'username' not in session:
+        flash('Debes iniciar sesión para dejar una reseña.', 'error')
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        review = request.form.get('review')
+        rating = request.form.get('rating')
+        serie_id = request.form.get('serie_id')  # Cambiar 'season_id' por 'serie_id'
+        username = session['username']
+
+        # Validar los datos del formulario
+        if not review or not rating or not serie_id:  # Cambiar 'season_id' por 'serie_id'
+            flash('Todos los campos son obligatorios.', 'error')
+            return redirect(url_for('index'))  # O redirigir a donde sea apropiado en tu aplicación
+
+        try:
+            # Convertir el rating y serie_id a int
+            rating = int(rating)
+            serie_id = int(serie_id)  # Cambiar 'season_id' por 'serie_id'
+        except ValueError:
+            flash('La puntuación y el número de temporada deben ser números enteros.', 'error')
+            return redirect(url_for('index'))  # O redirigir a donde sea apropiado en tu aplicación
+
+        # Insertar la reseña en la base de datos
+        cursor = mydb.cursor()
+        try:
+            cursor.execute("""
+                INSERT INTO resenyes (TemporadaID, NomUsuari, Critica, DataResenya, Puntuacio)
+                VALUES (%s, %s, %s, CURDATE(), %s)
+            """, (serie_id, username, review, rating))
+
+            mydb.commit()
+            flash('Tu reseña ha sido enviada con éxito.', 'success')
+
+        except mysql.connector.Error as error:
+            flash('Error al enviar la reseña: {}'.format(error), 'error')
+            print(error)
+            mydb.rollback()  # Revertir cualquier cambio en la base de datos si ocurre un error al insertar la reseña
+
+        cursor.close()
+
+    # Redirigir al usuario a la página de la serie con el ID de la temporada
+    return redirect(url_for('serie', serie_id=serie_id))  # Cambiar 'season_id' por 'serie_id'
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    #app.run(host='192.168.1.37')

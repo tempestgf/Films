@@ -1,28 +1,26 @@
-{% extends 'baseuser.html' %}
+{% extends 'base.html' %}
 
-{% block title %}Resenyes de Temporades{% endblock %}
+{% block title %}Resenyes{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-12">
-        <h1 class="mt-4 mb-4">Resenyes de Temporadas</h1>
+        <h1 class="mt-4 mb-4">Resenyes</h1>
     </div>
 </div>
 
-{% for serie in series %}
+{% for review in user_reviews %}
 <div class="card mb-4">
     <div class="card-header">
-        <h2>{{ serie['nombre'] }}</h2>
+        <h2>{{ review['NomSerie'] }}</h2>
     </div>
     <div class="card-body">
-        {% for temporada in serie['temporadas'] %}
         <div class="row">
             <div class="col-md-6">
-                <h4>{{ temporada }}</h4>
-                <p>{{ serie['reseñas'][temporada] }}</p>
+                <h4>Temporada {{ review['NumTemporada'] }}</h4>
+                <p>{{ review['Critica'] }}</p>
             </div>
         </div>
-        {% endfor %}
     </div>
 </div>
 {% endfor %}

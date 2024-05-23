@@ -1,51 +1,84 @@
-{% extends 'baseuser.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
-  guiljanielFilms - Admin
+  guiljanielFilms - Administració
 {% endblock %}
 
 {% block content %}
-  <!-- Formulari d'administració -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category, message in messages %}
+    <div class="alert alert-{{ category }}" role="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
   <div class="container my-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <form action="/admin" method="POST">
-          <!-- Camps del formulari -->
+        <form action="{{ url_for('admin') }}" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label for="platform">Plataforma</label>
-            <input type="text" class="form-control" id="platform" name="platform">
+            <select class="form-control" id="platform" name="platform" required>
+              <option value="Netflix">Netflix</option>
+              <option value="HBO">HBO</option>
+              <option value="Disney Plus">Disney Plus</option>
+            </select>
           </div>
           <div class="form-group">
-            <label for="theme">Tematica</label>
-            <input type="text" class="form-control" id="theme" name="theme">
+            <label for="theme">Tema</label>
+            <select class="form-control" id="theme" name="theme">
+                <option value="Acció">Acció</option>
+                <option value="Aventura">Aventura</option>
+                <option value="Comèdia">Comèdia</option>
+                <option value="Drama">Drama</option>
+                <option value="Terror">Terror</option>
+                <option value="Suspens">Suspens</option>
+                <option value="Ciència ficció">Ciència ficció</option>
+                <option value="Fantasia">Fantasia</option>
+                <option value="Crim">Crim</option>
+                <option value="Misteri">Misteri</option>
+                <option value="Romàntic">Romàntic</option>
+                <option value="Històric">Històric</option>
+                <option value="Biogràfic">Biogràfic</option>
+                <option value="Animació">Animació</option>
+                <option value="Documental">Documental</option>
+                <option value="Polític">Polític</option>
+                <option value="Guerra">Guerra</option>
+                <option value="Western">Western</option>
+                <option value="Musical">Musical</option>
+                <option value="Sobrenatural">Sobrenatural</option>
+            </select>
           </div>
+        
           <div class="form-group">
             <label for="seriesName">Nom de la sèrie</label>
-            <input type="text" class="form-control" id="seriesName" name="series_name">
+            <input type="text" class="form-control" id="seriesName" name="series_name" required>
           </div>
           <div class="form-group">
             <label for="season">Temporada</label>
-            <input type="text" class="form-control" id="season" name="season">
+            <input type="number" class="form-control" id="season" name="season">
           </div>
           <div class="form-group">
-            <label for="image1">Caràtula</label>
-            <input type="file" class="form-control-file" id="image1">
+            <label for="image">Caràtula</label>
+            <input type="file" class="form-control-file" id="image" name="image" required>
           </div>
           <div class="form-group">
-            <label for="image2">Trailer</label>
-            <input type="file" class="form-control-file" id="image2">
+            <label for="trailer">Trailer</label>
+            <input type="file" class="form-control-file" id="trailer" name="trailer" required accept=".mp4">
           </div>
           <div class="form-group">
             <label for="description">Descripció</label>
-            <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+            <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
           </div>
           <div class="form-group">
-            <label for="year">Any d'emissió</label>
-            <input type="text" class="form-control" id="year" name="year">
-          </div>
+            <label for="year">Any d'inici</label>
+            <input type="date" class="form-control" id="year" name="year" required>
+          </div>        
           <div class="form-group">
             <label for="awards">Premis</label>
-            <input type="text" class="form-control" id="awards" name="awards">
+            <input type="number" class="form-control" id="awards" name="awards">
           </div>
           <div class="form-group">
             <label for="cast">Repartiment</label>
@@ -55,14 +88,27 @@
             <label for="region">Regió</label>
             <input type="text" class="form-control" id="region" name="region">
           </div>
-          <!-- Boto Guardar i Boto Eliminar -->
           <div class="form-group">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="button" class="btn btn-danger">Eliminar</button>
+            <button type="submit" class="btn btn-primary">Desar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Formulari per eliminar sèries -->
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h2>Eliminar Sèrie</h2>
+        <form action="{{ url_for('eliminar_serie', serie_id=serie_id|default(-1)) }}" method="POST">
+          <div class="form-group">
+            <label for="serieID">ID de la Sèrie a Eliminar</label>
+            <input type="text" class="form-control" id="serieID" name="serie_id" required>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-danger">Eliminar</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-
 {% endblock %}

@@ -1,86 +1,111 @@
-
+/* Estilo para el cuerpo de la página */
 body {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Hace que el cuerpo ocupe al menos toda la altura de la ventana del navegador */
 }
 
-/* Estilos para el footer */
+/* Estilo para el contenido */
+.container {
+    flex: 1; /* Hace que el contenido ocupe el espacio restante en el cuerpo */
+}
+
+/* Estilo para el footer */
 footer {
-  background-color: #333;
-  color: white;
-  padding: 20px 0;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+    margin-top: auto; /* Empuja el footer hacia abajo hasta la parte inferior de la página */
 }
 
+/* Scroll to Top Button */
+#scrollToTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+}
 
+/* Videos in Carousel */
+.carousel-item video {
+  max-width: 100%;
+  max-height: 360px;
+  margin: auto;
+  display: block;
+}
+/* Tarjetas */
+.card {
+  background-color: #fff; /* Cambia el color de fondo */
+  border-radius: 10px; /* Añade bordes redondeados */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Añade sombra */
+  transition: box-shadow 0.3s; /* Añade transición suave */
+}
+/* Custom CSS for controlling image height inside cards */
+.card-img-top {
+  max-height: 590px;
+  object-fit: cover;
+}
 
-  .carousel-item video {
-    max-width: 640px; /* Defineix la mida màxima del vídeo */
-    max-height: 360px; /* Defineix la mida màxima del vídeo */
-    margin: auto; /* Centra el vídeo horitzontalment dins del carrusel */
-    display: block; /* Assegura que el vídeo es mostra com un bloc */
-  }
-
-
-  /* Estil CSS personalitzat per controlar l'alçada de les imatges dins de les targetes */
-  .card-img-top {
-    max-height: 500px; /* Alçada màxima per a les imatges */
-    object-fit: cover; /* Escalat de l'imatge per cobrir completament el recuadre */
-  }
-
-
-/* CSS per a la classe .video-fluid */
+/* CSS for fluid video */
 .video-fluid {
   width: 100%;
   height: auto;
 }
 
-/* CSS per a la classe .trailers-slider */
+/* CSS for trailers slider */
 .trailers-slider {
   display: flex;
-  overflow-x: hidden; /* Elimina la barra de desplaçament horitzontal */
-  overflow-y: hidden; /* Afegit per assegurar-se que no apareixi una barra de desplaçament vertical no desitjada */
+  overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
 }
 
-
-/* CSS per a la classe .trailer-item */
+/* CSS for trailer item */
 .trailer-item {
   flex: 0 0 auto;
   scroll-snap-align: start;
-  margin-right: 10px; /* Espai entre els vídeos */
-  width: 33.33%; /* Ajusta la mida perquè només es mostren tres trailers alhora */
+  margin-right: 10px;
+  width: 33.33%;
 }
 
-/* CSS per a l'estrella */
+
+
 .star {
-  color: gold; /* Canvia el color de l'estrella a or */
-}
-/* CSS per a l'estrella */
-
-
-.star-rating:before {
-  content: '\2605'; /* Codi Unicode per a una estrella */
-  position: absolute;
-  color: gold; /* Color de l'estrella */
+  height: 100px;
+  width: 100px;
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  text-align: center;
+  background: red;
+  color: white;
 }
 
-/* CSS per al recuadre de la categoria */
+.star::before {
+  display: inline-block;
+  height: 100%;
+  background: blue;
+  vertical-align: middle;
+  content: '';
+}
+
+/* Category tag box */
 .category-tag {
   display: inline-block;
-  background-color: #007bff; /* Color de fons */
-  color: #fff; /* Color del text */
+  background-color: #007bff;
+  color: #fff;
   font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  margin-top: 4px; /* Espai superior */
+  padding: 6px 12px; /* Aumenta el espacio interno */
+  border-radius: 20px; /* Hace que la etiqueta sea más redondeada */
+  margin-top: 10px; /* Aumenta el espacio superior */
 }
 
+/* Dropdown */
 .dropdown {
   position: relative;
 }

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Detalls de l'Usuari{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mt-4 mb-4">Editar Detalls de l'Usuari</h1>
+    </div>
+</div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category, message in messages %}
+    <div class="alert alert-{{ category }}" role="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Nom d'Usuari:</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ user['username'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="name">Nom:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ user['name'] }}">
+            </div>
+            <div class="form-group">
+                <label for="surname">Cognom:</label>
+                <input type="text" class="form-control" id="surname" name="surname" value="{{ user['surname'] }}">
+            </div>
+            <div class="form-group">
+                <label for="email">Correu Electrònic:</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ user['email'] }}">
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary" >Guardar Canvis</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
